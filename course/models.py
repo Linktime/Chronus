@@ -17,7 +17,7 @@ class ChronusUser(AbstractBaseUser):
     department = models.ForeignKey("Department")  # 院系
     available = models.BooleanField(default=True)
     USERNAME_FIELD = "identifier"
-    REQUIRED_FIELDS = ["xm", "xb"]
+    REQUIRED_FIELDS = ["name", "gender"]
 
 
 class Department(models.Model):
