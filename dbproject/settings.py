@@ -65,7 +65,7 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
-
+AUTH_USER_MODEL = "course.ChronusUser"
 LANGUAGE_CODE = "zh-cn"
 
 TIME_ZONE = 'Asia/Shanghai'
