@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #coding=utf-8
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.conf import settings
 
 #ActiveUser = django.contrib.auth.get_user_model()
@@ -16,6 +16,7 @@ class ChronusUser(AbstractBaseUser):
     birth_date = models.DateField()
     department = models.ForeignKey("Department")  # 院系
     available = models.BooleanField(default=True)
+    objects = UserManager()
     USERNAME_FIELD = "identifier"
     REQUIRED_FIELDS = ["name", "gender"]
 
