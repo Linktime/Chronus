@@ -1,24 +1,26 @@
 #!/usr/bin/python
 #coding=utf-8
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, UserManager
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.conf import settings
 
 #ActiveUser = django.contrib.auth.get_user_model()
 ActiveUser = settings.AUTH_USER_MODEL
 
+class SiteSettings(models.Model):
+    allow_select = models.BooleanField(default=True)
 
-class ChronusUser(AbstractBaseUser):
+class ChronusUser(AbstractUser):
     # TODO Write validations to ensure correct username format (eg. 11121111)
-    identifier = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=30)
     gender = models.CharField(max_length=2, choices=((u"M", u"男"), (u"F", u"女")))
     birth_date = models.DateField()
-    department = models.ForeignKey("Department")  # 院系
-    available = models.BooleanField(default=True)
+
+
+
     objects = UserManager()
-    USERNAME_FIELD = "identifier"
-    REQUIRED_FIELDS = ["name", "gender"]
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["name", "gender", "email", "birth_date"]
 
 
 class Department(models.Model):
@@ -33,6 +35,7 @@ class StudentInfo(models.Model):
     province = models.CharField(max_length=10)
     phone = models.CharField(max_length=20)
     entrance_semester = models.ForeignKey("Semester")
+    department = models.ForeignKey("Department")  # 院系
 
 
 class FlunkoutWarning(models.Model):
@@ -53,7 +56,7 @@ class TeacherInfo(models.Model):
     user = models.OneToOneField(ActiveUser, primary_key=True)
     rank = models.ForeignKey(TeacherRank)
     salary = models.DecimalField(max_digits=8, decimal_places=2)
-    department = models.ForeignKey(Department)
+    department = models.ForeignKey("Department")  # 院系)
 
 
 class Course(models.Model):
@@ -73,6 +76,7 @@ class OpenCourse(models.Model):
     time = models.CharField(max_length=30)
     capacity = models.IntegerField()  # 容量 --- 新增字段
     information = models.TextField(max_length=2000)
+    place = models.CharField(max_length=30)
 
 
 class ElectedCourse(models.Model):
