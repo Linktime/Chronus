@@ -68,6 +68,12 @@ class Course(models.Model):
     course_intro = models.CharField(max_length=300)
     course_detail = models.TextField(max_length=2000)
 
+class ElectedCourse(models.Model):
+    student = models.ForeignKey(ActiveUser)
+    course = models.ForeignKey('OpenCourse')
+    usual_score = models.IntegerField(null=True)
+    exam_score = models.IntegerField(null=True)
+    score = models.IntegerField(null=True)
 
 class OpenCourse(models.Model):
     semester = models.ForeignKey("Semester")
@@ -78,13 +84,8 @@ class OpenCourse(models.Model):
     information = models.TextField(max_length=2000)
     place = models.CharField(max_length=30)
 
-
-class ElectedCourse(models.Model):
-    student = models.ForeignKey(ActiveUser)
-    course = models.ForeignKey(OpenCourse)
-    usual_score = models.IntegerField(null=True)
-    exam_score = models.IntegerField(null=True)
-    score = models.IntegerField(null=True)
+    def elected_count(self):
+        return ElectedCourse.objects.filter(course=self.course).count()
 
 
 class Semester(models.Model):
