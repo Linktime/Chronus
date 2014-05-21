@@ -13,18 +13,18 @@ Dep2 = Department.objects.create(department_num='002', name='通信学院', addr
 
 TODAY = datetime.today()
 
-su1 = ChronusUser(identifier='suser1',birth_date=TODAY.date(), department=Dep1)
+su1 = ChronusUser(username='11121281',birth_date=TODAY.date())
 su1.set_password('123456')
 su1.save()
 
-su2 = ChronusUser(identifier='suser2', birth_date=TODAY.date(), department=Dep1)
+su2 = ChronusUser(username='11121282', birth_date=TODAY.date())
 su2.set_password('123456')
 su2.save()
 
-tu1 = ChronusUser(identifier='tuser1', birth_date=TODAY.date(), department=Dep1)
+tu1 = ChronusUser(username='10105678', birth_date=TODAY.date())
 tu1.set_password('123456')
 tu1.save()
-tu2 = ChronusUser(identifier='tuser2', birth_date=TODAY.date(), department=Dep1)
+tu2 = ChronusUser(username='10101234', birth_date=TODAY.date())
 tu2.set_password('123456')
 tu2.save()
 
@@ -37,9 +37,9 @@ sem1 = Semester.objects.create(begin_year=2011, season='S')
 sem2 = Semester.objects.create(begin_year=2011, season='W')
 
 stu1 = StudentInfo.objects.create(user=su1, province='北京',phone='12134123',
-                                  entrance_semester=sem1)
+                                  entrance_semester=sem1, department=Dep1)
 stu2 = StudentInfo.objects.create(user=su2, province='上海', phone='1231313',
-                                  entrance_semester=sem2)
+                                  entrance_semester=sem2, department=Dep2)
 
 
 trank1 = TeacherRank.objects.create(name='教授')
@@ -60,15 +60,18 @@ cour2 = Course.objects.create(course_num='0002', name='汇编语言', credit=4, 
 
 opcour1 = OpenCourse.objects.create(semester=sem1, course=cour1,
                                     time='一1-3,三7-8'
-                                    , capacity=150, information='......')
+                                    , capacity=150, information='......', place="J202")
 
 opcour2 = OpenCourse.objects.create(semester=sem2, course=cour2,
                                     time='一1-3,三7-8'
-                                    , capacity=150, information='......')
+                                    , capacity=150, information='......', place="J101")
 opcour2.teacher.add(tu1)
 
 ecour1 = ElectedCourse.objects.create(student=su1, course=opcour1,
-                                      usual_score=80, exam_score=85)
+                                      usual_score=80, exam_score=85, score=0.3*80 + 0.7*85)
+
+ecour2 = ElectedCourse.objects.create(student=su1, course=opcour2,
+                                      usual_score=70, exam_score=85)
 
 ecour2 = ElectedCourse.objects.create(student=su2, course=opcour2,
                                       usual_score=80, exam_score=85)
