@@ -21,10 +21,10 @@ su2 = ChronusUser(username='11121282', birth_date=TODAY.date())
 su2.set_password('123456')
 su2.save()
 
-tu1 = ChronusUser(username='10105678', birth_date=TODAY.date())
+tu1 = ChronusUser(username='10105678', birth_date=TODAY.date(),name=u"宋安平")
 tu1.set_password('123456')
 tu1.save()
-tu2 = ChronusUser(username='10101234', birth_date=TODAY.date())
+tu2 = ChronusUser(username='10101234', birth_date=TODAY.date(),name=u"李卫民")
 tu2.set_password('123456')
 tu2.save()
 
@@ -65,6 +65,7 @@ opcour1 = OpenCourse.objects.create(semester=sem1, course=cour1,
 opcour2 = OpenCourse.objects.create(semester=sem2, course=cour2,
                                     time='一1-3,三7-8'
                                     , capacity=150, information='......', place="J101")
+opcour1.teacher.add(tu1,tu2)
 opcour2.teacher.add(tu1)
 
 ecour1 = ElectedCourse.objects.create(student=su1, course=opcour1,

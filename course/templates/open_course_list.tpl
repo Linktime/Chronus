@@ -1,28 +1,36 @@
 {% extends "base.tpl" %}
 {% block title %}本学期已开课程{% endblock %}
 {% block body %}
-        <form>
-        <table class="table table-hover">
-            <thead>
-                <tr><th></th><th>课程号</th><th>课程名</th><th>任课教师</th><th>上课时间</th><th>容量</th></tr>
-            </thead>
-            <tbody>
-                {% for open_course in open_courses %}
-                <tr>
-                    <td><input type="checkbox" name="open_course" value="{{open_course.id}}"></td>
-                    <td>{{open_course.course.course_num}}</td>
-                    <td>{{open_course.course.name}}</td>
-                    <td>
-                        {% for teacher in open_course.teacher.all %}
-                            {{teacher.name}}&nbsp;
-                        {% endfor %}
-                    </td>
-                    <td>{{open_course.time}}</td>
-                    <td>{{open_course.capacity}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-            <a class="btn btn-success" href="#">选课</a>
+
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert fade in alert-block alert-{{ message.tags }}">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
+
+        <form action="{% url 'elected_course' %}" method="post">
+            {% csrf_token %}
+            {% include 'open_course_table.tpl' %}
+            <button type="submit" class="btn btn-success">选课</button>
         </form>
+
+        {% if is_paginated %}
+        <div>
+            <ul class="pagination pagination-centered">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">«</a></li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                <li><a href="?page={{page}}">{{page}}</a></li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">»</a></li>
+                {% endif %}
+                <li><a>第{{ page_obj.number }} 页/ 共{{ page_obj.paginator.num_pages }}页</a></li>
+            </ul>
+        </div>
+        {% endif %}
 {% endblock %}
