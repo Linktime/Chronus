@@ -47,8 +47,11 @@ class StudentInfo(models.Model):
 
     def get_credit(self):
         elected_course = ElectedCourse.objects.filter(student=self.user)
-        # return reduce(lambda x,y:x+y,map(lambda x:x.course.course.credit,elected_course))
-        return elected_course.aggregate(credit=models.Sum("course__course__credit"))["credit"]
+        return elected_course.aggregate(credit=models.Sum("course__course__credit"))["credit"] or 0
+
+    def get_course_count(self):
+        elected_course = ElectedCourse.objects.filter(student=self.user)
+        return elected_course.count()
 
 class FlunkoutWarning(models.Model):
     student = models.OneToOneField(ActiveUser, primary_key=True)

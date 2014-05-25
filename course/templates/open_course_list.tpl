@@ -1,5 +1,6 @@
 {% extends "base.tpl" %}
 {% block title %}本学期已开课程{% endblock %}
+{% block open_course_tag %}active{% endblock %}
 {% block body %}
 
         {% if messages %}
@@ -11,7 +12,7 @@
         {% endfor %}
         {% endif %}
 
-        <form action="{% url 'elected_course' %}" method="post" role="form">
+        <form action="{% url 'student_elected_course' %}" method="post" role="form">
             {% csrf_token %}
             {% include 'open_course_table.tpl' %}
             <button type="submit" class="btn btn-success">选课</button>

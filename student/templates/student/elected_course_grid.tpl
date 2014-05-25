@@ -1,7 +1,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th class="col-md-2 warning"></th>
+                    <th class="col-md-1 warning">节次</th>
                     <th class="col-md-2 warning">一</th>
                     <th class="col-md-2 warning">二</th>
                     <th class="col-md-2 warning">三</th>

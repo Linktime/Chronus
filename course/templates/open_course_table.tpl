@@ -17,7 +17,7 @@
                     </td>
                     <td>{{open_course.place}}</td>
                     <td>{{open_course.time}}</td>
-                    <td>{{open_course.elected_count}}/{{open_course.capacity}}</td>
+                    <td class="{% if open_course.elected_count == open_course.capacity %}danger{% endif %}">{{open_course.elected_count}}/{{open_course.capacity}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
