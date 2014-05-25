@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.conf import settings
+import re
 
 #ActiveUser = django.contrib.auth.get_user_model()
 ActiveUser = settings.AUTH_USER_MODEL
@@ -22,6 +23,13 @@ class ChronusUser(AbstractUser):
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["name", "gender", "email", "birth_date"]
 
+    def is_teacher(self):
+        r = re.compile(r"^1000\d{4}$")
+        if re.match(self.username):
+            return True
+        else :
+            return False
+
 
 class Department(models.Model):
     department_num = models.CharField(max_length=30, unique=True)
@@ -37,6 +45,10 @@ class StudentInfo(models.Model):
     entrance_semester = models.ForeignKey("Semester")
     department = models.ForeignKey("Department")  # 院系
 
+    def get_credit(self):
+        elected_course = ElectedCourse.objects.filter(student=self.user)
+        # return reduce(lambda x,y:x+y,map(lambda x:x.course.course.credit,elected_course))
+        return elected_course.aggregate(credit=models.Sum("course__course__credit"))["credit"]
 
 class FlunkoutWarning(models.Model):
     student = models.OneToOneField(ActiveUser, primary_key=True)

@@ -15,4 +15,6 @@
         {% include 'student/elected_course_table.tpl' %}
         <button type="submit" class="btn btn-danger">退课</button>
         </form>
+
+        {% include 'student/elected_course_grid.tpl' %}
 {% endblock %}

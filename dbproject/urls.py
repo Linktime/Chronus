@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login
 
 from course.views import dblogout, index
-from course.views import OpenCourseListView, CourseListView
+from course.views import OpenCourseListView, OpenCourseAdvancedSearchListView, CourseListView
 
 from student import urls
 admin.autodiscover()
@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 
     url(r'^course/$',CourseListView.as_view()),
     url(r'^open_course/$',OpenCourseListView.as_view(),name="open_course_list"),
+    url(r'^open_course/advanced_search$',OpenCourseAdvancedSearchListView.as_view(),name="open_course_advanced_search"),
 
     url(r'^student/',include('student.urls')),
 )
