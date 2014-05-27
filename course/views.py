@@ -63,6 +63,14 @@ class OpenCourseAdvancedSearchListView(ListView):
             queryset_by = queryset_by.filter(time__contains=course_time)
         return queryset_by
 
+    def get_context_data(self, **kwargs):
+        context = super(OpenCourseAdvancedSearchListView,self).get_context_data(**kwargs)
+        data = self.request.GET
+        search_arg = "&course_name=%s&course_teacher=%s&course_time=%s&course_num=%s" %\
+                     (data.get("course_name"),data.get("course_teacher"),data.get("course_time"),data.get("course_num"))
+        context["search_arg"] = search_arg
+        return context
+
 class CourseListView(ListView):
     model = Course
     template_name = "course_list.tpl"

@@ -12,29 +12,6 @@
         {% endfor %}
         {% endif %}
 
-        <form action="{% url 'student_elected_course' %}" method="post" role="form">
-            {% csrf_token %}
-            {% include 'open_course_table.tpl' %}
-            <button type="submit" class="btn btn-success">选课</button>
-        </form>
-
-        {% if is_paginated %}
-        <div>
-            <ul class="pagination pagination-centered">
-                {% if page_obj.has_previous %}
-                <li><a href="?page={{ page_obj.previous_page_number }}">«</a></li>
-                {% endif %}
-                {% for page in page_obj.paginator.page_range %}
-                <li><a href="?page={{page}}">{{page}}</a></li>
-                {% endfor %}
-                {% if page_obj.has_next %}
-                <li><a href="?page={{ page_obj.next_page_number }}">»</a></li>
-                {% endif %}
-                <li><a>第{{ page_obj.number }} 页/ 共{{ page_obj.paginator.num_pages }}页</a></li>
-            </ul>
-        </div>
-        {% endif %}
-
         <form class="form-horizontal" method="get" action="{% url 'open_course_advanced_search' %}" role="form">
             <fieldset>
                 <legend>高级查询</legend>
@@ -65,4 +42,28 @@
                 <button class="btn btn-default">查询</button>
             </fieldset>
         </form>
+
+        <form action="{% url 'student_elected_course' %}" method="post" role="form">
+            {% csrf_token %}
+            {% include 'open_course_table.tpl' %}
+            <button type="submit" class="btn btn-success">选课</button>
+        </form>
+
+        {% if is_paginated %}
+        <div>
+            <ul class="pagination pagination-centered">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}{{search_arg}}">«</a></li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                <li><a href="?page={{page}}{{search_arg}}">{{page}}</a></li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}{{search_arg}}">»</a></li>
+                {% endif %}
+                <li><a>第{{ page_obj.number }} 页/ 共{{ page_obj.paginator.num_pages }}页</a></li>
+            </ul>
+        </div>
+        {% endif %}
+
 {% endblock %}

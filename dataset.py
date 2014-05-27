@@ -6,9 +6,9 @@ from course.models import SiteSettings
 from course.models import ChronusUser, Department, StudentInfo, Semester, TeacherRank
 from course.models import TeacherInfo, Course, OpenCourse, ElectedCourse
 
-Dep1 = Department.objects.create(department_num='001', name='计算机学院',address='东区',
+Dep1 = Department.objects.create(department_num='005', name='计算机学院',address='东区',
                                  phone='404')
-Dep2 = Department.objects.create(department_num='002', name='通信学院', address='东区计院旁',
+Dep2 = Department.objects.create(department_num='006', name='通信学院', address='东区计院旁',
                                  phone='500')
 
 TODAY = datetime.today()
@@ -21,6 +21,12 @@ su2 = ChronusUser(username='11121282', birth_date=TODAY.date())
 su2.set_password('123456')
 su2.save()
 
+stu1 = StudentInfo.objects.create(user=su1, province='北京',phone='12134123',
+                                  entrance_semester=sem1, department=Dep1)
+stu2 = StudentInfo.objects.create(user=su2, province='上海', phone='1231313',
+                                  entrance_semester=sem2, department=Dep2)
+
+'''
 tu1 = ChronusUser(username='10105678', birth_date=TODAY.date(),name=u"宋安平")
 tu1.set_password('123456')
 tu1.save()
@@ -38,11 +44,6 @@ sem2 = Semester.objects.create(begin_year=2011, season='W')
 
 ss = SiteSettings(current_semester=sem1)
 ss.save()
-
-stu1 = StudentInfo.objects.create(user=su1, province='北京',phone='12134123',
-                                  entrance_semester=sem1, department=Dep1)
-stu2 = StudentInfo.objects.create(user=su2, province='上海', phone='1231313',
-                                  entrance_semester=sem2, department=Dep2)
 
 
 trank1 = TeacherRank.objects.create(name='教授')
@@ -79,3 +80,4 @@ ecour2 = ElectedCourse.objects.create(student=su1, course=opcour2,
 
 ecour2 = ElectedCourse.objects.create(student=su2, course=opcour2,
                                       usual_score=80, exam_score=85)
+'''

@@ -2,7 +2,7 @@ __author__ = 'hz'
 #coding=utf-8
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbproject.settings")
-from course.models import ChronusUser, Department, StudentInfo, Semester, TeacherRank
+from course.models import ChronusUser, Department, StudentInfo, Semester, TeacherRank, SiteSettings
 from course.models import TeacherInfo, Course, OpenCourse, ElectedCourse
 from datetime import datetime
 f = open("./book_back.csv","r")
@@ -19,6 +19,12 @@ try :
     sem = Semester.objects.get(begin_year=2011,season='S')
 except Semester.DoesNotExist:
     sem = Semester.objects.create(begin_year=2011, season='S')
+
+try :
+    ss = SiteSettings.objects.get(current_semester=sem)
+except:
+    ss = SiteSettings(current_semester=sem)
+    ss.save()
 
 for line in f.readlines():
         r_list = line.split(",")

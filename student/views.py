@@ -54,7 +54,7 @@ class ElectedCourseListView(ListView,MixinByStudent):
             course_time = day_pattern.findall(course.course.time) or []
             for day_time in course_time:
                 hours = hour_pattern.findall(day_time)
-                for hour in xrange(int(hours[0]),int(hours[1])+1):
+                for hour in xrange(int(hours[0])-1,int(hours[1])):
                     week[hour][day_time[0]] = course.course.course.name
             # import code;code.interact(local=locals())
         context['week'] = week

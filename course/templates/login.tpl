@@ -11,9 +11,9 @@
   				margin-top: 50;
 				}
 
-		    body{ background-color:#FFE; }
+		    //body{ background-color:#FFE; }
 
-		    .bg{ background-color:#FFF;}
+		    //.bg{ background-color:#FFF;}
 	</style>
 
 
@@ -25,20 +25,20 @@
             {% csrf_token %}
 
         <div class="form-group">
-            <label for="username" class="col-sm-2 control-label">username</label>
+            <label for="id_username" class="col-sm-2 control-label">用户名(学号)：</label>
             <div class="col-sm-4">
-            <input type="text" class="form-control" id="inputusername" placeholder="Username">
+            <input type="text" class="form-control" id="id_username" placeholder="Username" name="username">
             </div>
          </div>
 
         <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <label for="id_password" class="col-sm-2 control-label">密码：</label>
             <div class="col-sm-4">
-             <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+             <input type="password" class="form-control" id="id_password" placeholder="Password" name="password">
             </div>
          </div>
 
-
+        {% comment %}
          <div class="form-group">
             <div class="col-sm-offset-2 col-sm-6">
             <div class="checkbox">
@@ -48,15 +48,13 @@
              </div>
             </div>
         </div>
+        {% endcomment %}
 
          <div class="form-group">
             <div class="col-sm-offset-2 col-sm-4">
-             <button type="submit" class="btn btn-primary">Sign in</button>
+             <button type="submit" class="btn btn-primary">登陆</button>
             </div>
          </div>
-
-         </div>
-         <div>
 </form>
 
 
