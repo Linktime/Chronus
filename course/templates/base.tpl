@@ -3,6 +3,9 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
     {% block css_head %}{% endblock %}
+
+
+
 </head>
 <body>
 
