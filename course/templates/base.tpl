@@ -24,7 +24,8 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
         {% if user.is_teacher %}
-          <li><a href="">teacher</a></li>
+          <li><a href="{% url "currentlist" %}">当前课程</a></li>
+          <li><a href="{% url "alllist" %}">所有课程</a></li>
         {% else %}
           <li class="{% block open_course_tag %}{% endblock %}"><a href="{% url 'open_course_list' %}">选课</a></li>
           <li class="{% block elected_course_tag %}{% endblock %}"><a href="{% url 'elected_course' %}">课表查询</a></li>
@@ -36,7 +37,7 @@
             </ul>
           </li>
         </ul>
-        {% if user.is_student %}IntellijIdeaRulezzz
+        {% if user.is_student %}
         <form class="navbar-form navbar-left" role="search" action="{% url 'open_course_list' %}">
           <div class="input-group">
             <input type="text" class="form-control" name="course_name" placeholder="课程名">

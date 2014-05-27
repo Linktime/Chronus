@@ -114,6 +114,12 @@ class OpenCourse(models.Model):
     def get_url(self):
         return urlresolvers.reverse("opencourse_profile", args=(str(self.id),))
 
+    def get_modify_url(self):
+        return urlresolvers.reverse("uploadgrade", args=(str(self.id),))
+
+    def is_current(self):
+        return SiteSettings.objects.all()[0].current_semester == self.semester
+
 
 class Semester(models.Model):
     begin_year = models.IntegerField()

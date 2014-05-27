@@ -85,7 +85,7 @@ class OpenCourseAdvancedSearchListView(ListView):
 
 class CourseListView(ListView):
     model = Course
-    template_name = "course_list.tpl"
+    template_name = "teacher/course_list.tpl"
     context_object_name = "courses"
     paginate_by = 15
 
