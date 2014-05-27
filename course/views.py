@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.list import ListView, MultipleObjectMixin
 from django.contrib.auth import logout
 from course.models import ElectedCourse, OpenCourse
@@ -19,6 +20,14 @@ def index(request):
     if request.user.is_authenticated():
         print request.user.is_teacher()
     return render_to_response('index.tpl',context_instance=RequestContext(request))
+
+def course_profile(request, ocid):
+    try:
+        ocourse = OpenCourse.objects.get(id=int(ocid))
+    except ObjectDoesNotExist:
+        ocourse = None
+    return render_to_response('course_profile.tpl', {"ocourse": ocourse}, context_instance=RequestContext(request))
+
 
 def dblogout(request):
     logout(request)

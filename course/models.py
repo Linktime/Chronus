@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.conf import settings
+from django.core import urlresolvers
 import re
 
 #ActiveUser = django.contrib.auth.get_user_model()
@@ -109,6 +110,9 @@ class OpenCourse(models.Model):
 
     def elected_count(self):
         return ElectedCourse.objects.filter(course=self.course).count()
+
+    def get_url(self):
+        return urlresolvers.reverse("opencourse_profile", args=(str(self.id),))
 
 
 class Semester(models.Model):

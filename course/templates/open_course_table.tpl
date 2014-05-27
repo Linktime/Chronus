@@ -8,7 +8,7 @@
                 <tr>
                     <td><input type="checkbox" name="open_course" value="{{open_course.id}}"></td>
                     <td>{{open_course.course.course_num}}</td>
-                    <td>{{open_course.course.name}}</td>
+                    <td><a href="{{open_course.get_url}}" target="_blank">{{open_course.course.name}}</a></td>
                     <td>{{open_course.course.credit}}</td>
                     <td>
                         {% for teacher in open_course.teacher.all %}

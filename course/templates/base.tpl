@@ -36,7 +36,7 @@
             </ul>
           </li>
         </ul>
-        {% if user.is_student %}
+        {% if user.is_student %}IntellijIdeaRulezzz
         <form class="navbar-form navbar-left" role="search" action="{% url 'open_course_list' %}">
           <div class="input-group">
             <input type="text" class="form-control" name="course_name" placeholder="课程名">
