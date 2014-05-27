@@ -26,10 +26,13 @@ class ChronusUser(AbstractUser):
 
     def is_teacher(self):
         r = re.compile(r"^1000\d{4}$")
-        if re.match(self.username):
+        if re.match(r, self.username):
             return True
         else :
             return False
+
+    def is_student(self):
+        return not self.is_teacher()
 
 
 class Department(models.Model):

@@ -15,6 +15,9 @@ ss = SiteSettings.objects.filter()
 current_semester = ss[0].current_semester
 
 def index(request):
+    print request.user
+    if request.user.is_authenticated():
+        print request.user.is_teacher()
     return render_to_response('index.tpl',context_instance=RequestContext(request))
 
 def dblogout(request):

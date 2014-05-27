@@ -23,22 +23,27 @@
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
+        {% if user.is_teacher %}
+          <li><a href="">teacher</a></li>
+        {% else %}
           <li class="{% block open_course_tag %}{% endblock %}"><a href="{% url 'open_course_list' %}">选课</a></li>
           <li class="{% block elected_course_tag %}{% endblock %}"><a href="{% url 'elected_course' %}">课表查询</a></li>
           <li class="dropdown {% block score_tag %}{% endblock %}"><a href="#" class="dropdown-toggle" data-toggle="dropdown">成绩<b class="caret"></b></a>
+        {% endif %}
             <ul class="dropdown-menu">
                 <li><a href="{% url 'current_score' %}">本学期成绩</a></li>
                 <li><a href="{% url 'score' %}">成绩总表</a></li>
             </ul>
           </li>
         </ul>
+        {% if user.is_student %}
         <form class="navbar-form navbar-left" role="search" action="{% url 'open_course_list' %}">
           <div class="input-group">
             <input type="text" class="form-control" name="course_name" placeholder="课程名">
             <span class="input-group-btn"><button type="submit" class="btn btn-default">快速查询</button></span>
           </div>
-
         </form>
+        {% endif %}
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
           <li class="dropdown">
