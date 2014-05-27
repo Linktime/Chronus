@@ -10,6 +10,7 @@ ActiveUser = settings.AUTH_USER_MODEL
 
 class SiteSettings(models.Model):
     allow_select = models.BooleanField(default=True)
+    current_semester = models.ForeignKey('Semester')
 
 class ChronusUser(AbstractUser):
     # TODO Write validations to ensure correct username format (eg. 11121111)
@@ -46,11 +47,15 @@ class StudentInfo(models.Model):
     department = models.ForeignKey("Department")  # 院系
 
     def get_credit(self):
-        elected_course = ElectedCourse.objects.filter(student=self.user)
+        ss = SiteSettings.objects.filter()
+        current_semester = ss[0].current_semester
+        elected_course = ElectedCourse.objects.filter(student=self.user,course__semester=current_semester)
         return elected_course.aggregate(credit=models.Sum("course__course__credit"))["credit"] or 0
 
     def get_course_count(self):
-        elected_course = ElectedCourse.objects.filter(student=self.user)
+        ss = SiteSettings.objects.filter()
+        current_semester = ss[0].current_semester
+        elected_course = ElectedCourse.objects.filter(student=self.user,course__semester=current_semester)
         return elected_course.count()
 
 class FlunkoutWarning(models.Model):

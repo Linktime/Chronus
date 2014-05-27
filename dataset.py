@@ -2,9 +2,9 @@
 import os
 from datetime import datetime
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbproject.settings")
+from course.models import SiteSettings
 from course.models import ChronusUser, Department, StudentInfo, Semester, TeacherRank
 from course.models import TeacherInfo, Course, OpenCourse, ElectedCourse
-
 
 Dep1 = Department.objects.create(department_num='001', name='计算机学院',address='东区',
                                  phone='404')
@@ -35,6 +35,9 @@ tu2.save()
 
 sem1 = Semester.objects.create(begin_year=2011, season='S')
 sem2 = Semester.objects.create(begin_year=2011, season='W')
+
+ss = SiteSettings(current_semester=sem1)
+ss.save()
 
 stu1 = StudentInfo.objects.create(user=su1, province='北京',phone='12134123',
                                   entrance_semester=sem1, department=Dep1)

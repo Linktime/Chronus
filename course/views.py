@@ -9,7 +9,10 @@ from course.models import ElectedCourse, OpenCourse
 from django.contrib import messages
 import re
 
-from course.models import OpenCourse, Course
+from course.models import OpenCourse, Course, SiteSettings
+
+ss = SiteSettings.objects.filter()
+current_semester = ss[0].current_semester
 
 def index(request):
     return render_to_response('index.tpl',context_instance=RequestContext(request))
@@ -27,6 +30,7 @@ class OpenCourseListView(ListView):
     def get_queryset(self):
         queryset = super(OpenCourseListView,self).get_queryset()
         course_name = self.request.GET.get('course_name')
+        queryset = queryset.filter(semester=current_semester)
         if course_name:
             queryset_by_name = queryset.filter(course__name__contains=course_name)
             return queryset_by_name
@@ -41,6 +45,7 @@ class OpenCourseAdvancedSearchListView(ListView):
 
     def get_queryset(self):
         queryset = super(OpenCourseAdvancedSearchListView,self).get_queryset()
+        queryset = queryset.filter(semester=current_semester)
         data = self.request.GET
         course_name = data.get('course_name')
         course_teacher = data.get('course_teacher')
@@ -66,7 +71,7 @@ class CourseListView(ListView):
 
 def elected_course(request,user,course_list):
     for course_id in course_list:
-            course = OpenCourse.objects.get(id=course_id)
+            course = OpenCourse.objects.get(id=course_id,semester=current_semester)
             if course.elected_count()==course.capacity:
                 messages.warning(request,u"课程《%s》选取失败，已超人数限制！"%course.course.name)
             else:
@@ -104,7 +109,7 @@ def elected_course(request,user,course_list):
 
 def cancel_elected(request,user,course_list):
     for course_id in course_list:
-            course = OpenCourse.objects.get(id=course_id)
+            course = OpenCourse.objects.get(id=course_id,semester=current_semester)
             try :
                 elected_course = ElectedCourse.objects.get(student=user,course=course)
                 elected_course.delete()

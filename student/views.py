@@ -2,15 +2,19 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView, MultipleObjectMixin
 from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
-from course.models import ElectedCourse, OpenCourse
+from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from course.views import elected_course, cancel_elected
+from course.models import ElectedCourse, OpenCourse, SiteSettings
 
 import re
 
 from django.contrib import messages
 # Create your views here.
+
+ss = SiteSettings.objects.filter()
+current_semester = ss[0].current_semester
 
 class MixinByStudent(MultipleObjectMixin):
     def get_queryset(self):
@@ -23,6 +27,11 @@ class ElectedCourseListView(ListView,MixinByStudent):
     model = ElectedCourse
     template_name = 'student/elected_course_list.tpl'
     context_object_name = 'elected_course_list'
+
+    def get_queryset(self):
+        queryset = super(ElectedCourseListView,self).get_queryset()
+        queryset = queryset.filter(course__semester=current_semester)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ElectedCourseListView,self).get_context_data(**kwargs)
@@ -49,6 +58,36 @@ class ElectedCourseListView(ListView,MixinByStudent):
                     week[hour][day_time[0]] = course.course.course.name
             # import code;code.interact(local=locals())
         context['week'] = week
+        return context
+
+class CurrentCourseScoreListView(ListView,MixinByStudent):
+    model = ElectedCourse
+    template_name = "student/current_score_list.tpl"
+    context_object_name = "courses"
+
+    def get_queryset(self):
+        queryset = super(CurrentCourseScoreListView,self).get_queryset()
+        queryset_by_semester = queryset.filter(course__semester=current_semester)
+        return queryset_by_semester
+
+    def get_context_data(self, **kwargs):
+        context = super(CurrentCourseScoreListView,self).get_context_data(**kwargs)
+        courses = context["courses"]
+        avg_score = courses.aggregate(avg_score=models.Avg("score"))["avg_score"]
+        context["avg_score"] = avg_score
+        return context
+
+
+class CourseScoreListView(ListView,MixinByStudent):
+    model = ElectedCourse
+    template_name = "student/score_list.tpl"
+    context_object_name = "courses"
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseScoreListView,self).get_context_data(**kwargs)
+        courses = context["courses"]
+        avg_score = courses.aggregate(avg_score=models.Avg("score"))["avg_score"]
+        context["avg_score"] = avg_score
         return context
 
 @login_required
