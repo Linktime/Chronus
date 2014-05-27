@@ -23,4 +23,5 @@ urlpatterns = patterns('',
     url(r'^open_course/(\d+)/', course_profile, name="opencourse_profile"),
 
     url(r'^student/',include('student.urls')),
+    url(r'^teacher/', include('teacher.urls')),
 )

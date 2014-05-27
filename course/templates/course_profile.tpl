@@ -10,13 +10,17 @@
     </tr>
     <tr>
         <td>学期</td>
-        <td>{{ ocourse.course.semester.semester }}</td>
+        <td>{{ ocourse.semester.semester }}</td>
         <td>学院</td>
         <td>{{ ocourse.course.department.name }}</td>
     </tr>
     <tr>
         <td>教师</td>
-        <td>{{ ocourse.teacher.name }}</td>
+        <td>
+        {% for teacher in ocourse.teacher.all %}
+        {{ teacher.name }}&nbsp;
+        {%endfor%}
+        </td>
         <td>容量</td>
         <td>{{ ocourse.elected_count }}/{{ ocourse.capacity }}</td>
     </tr>
