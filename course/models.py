@@ -35,6 +35,9 @@ class ChronusUser(AbstractUser):
     def is_student(self):
         return not self.is_teacher()
 
+    def __unicode__(self):
+        return self.username
+
 
 class Department(models.Model):
     department_num = models.CharField(max_length=30, unique=True)

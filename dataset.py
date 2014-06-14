@@ -32,7 +32,7 @@ stu1 = StudentInfo.objects.create(user=su1, province='北京',phone='12134123',
 stu2 = StudentInfo.objects.create(user=su2, province='上海', phone='1231313',
                                   entrance_semester=sem2, department=Dep2)
 
-
+'''
 tu1 = ChronusUser(username='10005678', birth_date=TODAY.date(),name=u"宋安平")
 tu1.set_password('123456')
 tu1.save()
@@ -81,4 +81,4 @@ ecour2 = ElectedCourse.objects.create(student=su1, course=opcour2,
 
 ecour2 = ElectedCourse.objects.create(student=su2, course=opcour2,
                                       usual_score=80, exam_score=85)
-
+'''
